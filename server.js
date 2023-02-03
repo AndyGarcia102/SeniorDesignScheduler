@@ -8,11 +8,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolver");
+const path = require('path');  
 require('dotenv').config();
 
 async function startServer(){
     const app = express();
-
+    
     const httpServer = http.createServer(app);
 
     const server = new ApolloServer({
@@ -23,11 +24,12 @@ async function startServer(){
 
     await server.start();
 
-
+    app.use('/Web/client/public', express.static(__dirname,"..",'index.html'));
     app.use(
         '/graphql',
         cors(),
         bodyParser.json(),
+        sds(),
         expressMiddleware(server),
     );
     
