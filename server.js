@@ -24,7 +24,7 @@ async function startServer(){
 
     await server.start();
 
-    app.use('/Web/client/public', express.static(__dirname,"..",'index.html'));
+    app.use('SENIORDESINGSCHEDULER/Web/client/public', express.static(__dirname,"..",'index.html'));
     app.use(
         '/graphql',
         cors(),
