@@ -42,7 +42,7 @@ async function startServer(){
     console.log("Mongoose Connected...");
     await new Promise((resolve) => httpServer.listen({port:process.env.PORT}, resolve));
 
-    console.log(`🚀 Server ready at http://localhost:4000/`);
+    console.log(`🚀 Server ready at`+process.env.PORT);
 
  }
 
