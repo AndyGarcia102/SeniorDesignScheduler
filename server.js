@@ -30,13 +30,9 @@ async function startServer(){
         '/graphql',
         cors(),
         bodyParser.json(),
-        express.static(path.join(__dirname,'/Web/client/public')),
+        express.static(path.join(__dirname,'/Web/client/public/index.html')),
         expressMiddleware(server),
     );
-
-    app.get("/", function(req, res){
-        res.render("index");
-    });
     
 
     await mongoose.connect(process.env.MONGODB_URI);
