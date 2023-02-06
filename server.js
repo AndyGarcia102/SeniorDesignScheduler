@@ -24,6 +24,7 @@ async function startServer(){
 
     await server.start();
 
+    app.set('view engine', 'ejs');
     
     app.use(
         '/graphql',
