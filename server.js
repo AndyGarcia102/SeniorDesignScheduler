@@ -33,11 +33,11 @@ async function startServer(){
         expressMiddleware(server),
     );
 
-    app.use(express.static(path.join(__dirname, "Web/client/", "build")));
+    app.use(express.static(path.join(__dirname, "Web/client", "build")));
     app.use(express.static("Web/client/public"));
 
     app.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, "..", "build", "index.html"));
+        res.sendFile(path.join(__dirname, "Web/client", "build", "index.html"));
     });
         
 
