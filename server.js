@@ -8,7 +8,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const typeDefs = require("./typeDefs");
 const resolvers = require("./resolver");
-const path = require('path');  
+const path = require("path");
 require('dotenv').config();
 
 async function startServer(){
@@ -24,12 +24,12 @@ async function startServer(){
 
     await server.start();
 
-    app.use('SENIORDESINGSCHEDULER/Web/client/public', express.static(__dirname,"..",'index.html'));
+    
     app.use(
         '/graphql',
         cors(),
         bodyParser.json(),
-        sds(),
+        express.static(path.join(__dirname,'/Web/client/public')),
         expressMiddleware(server),
     );
     
