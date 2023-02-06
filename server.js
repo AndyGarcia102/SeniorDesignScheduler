@@ -41,7 +41,7 @@ async function startServer(){
     // });
 
     app.get('/*', function (req, res) {
-        res.sendFile(path.join(__dirname, 'Web/client/build', 'index.html'));
+        res.sendFile(path.join(__dirname, 'Web/client/public', 'index.html'));
     });
         
 
