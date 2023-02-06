@@ -33,9 +33,7 @@ async function startServer(){
         expressMiddleware(server),
     );
 
-    app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "Web/client/build", "index.html"));
-    });
+    app.use(express.static("Web/client/public/index.html"));
         
 
     await mongoose.connect(process.env.MONGODB_URI);
