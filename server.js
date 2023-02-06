@@ -33,7 +33,7 @@ async function startServer(){
         expressMiddleware(server),
     );
 
-    app.get("/", (req, res) => {
+    app.get("*", (req, res) => {
         res.sendFile(path.join(__dirname, "Web/client/build", "index.html"));
     });
         
