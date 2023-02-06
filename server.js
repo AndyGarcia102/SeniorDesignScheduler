@@ -34,9 +34,9 @@ async function startServer(){
     );
 
     app.get("/", (req, res) => {
-        res.sendFile(path.join(__dirname, "Web/client/public", "index.html"));
+        res.sendFile(path.join(__dirname, "Web/client/build", "index.html"));
     });
-    
+        
 
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("Mongoose Connected...");
