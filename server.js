@@ -41,9 +41,9 @@ async function startServer(){
 
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("Mongoose Connected...");
-    await new Promise((resolve) => httpServer.listen({port:process.env.PORT}, resolve));
+    await new Promise((resolve) => httpServer.listen({port:8080}, resolve));
 
-    console.log(`🚀 Server ready at`+process.env.PORT);
+    console.log(`🚀 Server ready at`+ 8080);
 
  }
 
