@@ -13,16 +13,16 @@ function Sidebar(){
 
     let navigate = useNavigate();
 
-    const {user, logout} = useContext(AuthContext);
+    const {logout} = useContext(AuthContext);
 
     const onLogout = () => {
         logout();
         navigate('/');
     }
 
-    const firstname = localStorage.getItem("firstname");
-    const lastname = localStorage.getItem("lastname");
-    const privilege = localStorage.getItem("privilege");
+    let firstname = localStorage.getItem("firstname");
+    let lastname = localStorage.getItem("lastname");
+    let privilege = localStorage.getItem("privilege");
 
     if(firstname === undefined){
         firstname = "";
