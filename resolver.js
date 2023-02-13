@@ -364,7 +364,8 @@ const resolvers = {
                             id : professors._id, 
                             email, 
                             firstname: professors.professorFName, 
-                            lastname: professors.professorLName
+                            lastname: professors.professorLName,
+                            privilege: professorsInfo.privilege
                         }, 
                         "UNSAFE_STRING", // stored in a secret file 
                         {expiresIn: "1d"}
@@ -388,7 +389,9 @@ const resolvers = {
                             id : coordinator._id, 
                             email, 
                             firstname: coordinator.professorFName, 
-                            lastname: coordinator.professorLName
+                            lastname: coordinator.professorLName,
+                            privilege: professorsInfo.privilege
+
                         }, 
                         "UNSAFE_STRING", // stored in a secret file 
                         {expiresIn: "1d"}
@@ -424,7 +427,9 @@ const resolvers = {
                             id : student._id, 
                             email, 
                             firstname: student.userFName, 
-                            lastname: student.userLName
+                            lastname: student.userLName,
+                            privilege: studentInfo.privilege
+
                         }, 
                         "UNSAFE_STRING", // stored in a secret file 
                         {expiresIn: "1d"}
