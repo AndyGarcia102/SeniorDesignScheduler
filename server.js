@@ -19,8 +19,7 @@ async function startServer(){
     const server = new ApolloServer({
         typeDefs,
         resolvers,
-        plugins:[ApolloServerPluginDrainHttpServer({httpServer})],
-        csrfPreventions:false
+        plugins:[ApolloServerPluginDrainHttpServer({httpServer})]
     });
 
     await server.start();
