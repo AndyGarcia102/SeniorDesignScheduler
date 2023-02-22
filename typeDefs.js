@@ -155,6 +155,25 @@ scalar DateTime
         groupNumber: Int
     }
 
+    type groupData {
+        groupName: String
+        groupNumber: Int
+        projectField: String
+    }
+
+    type CoordSchedule2 {
+        _id: ID
+        room: String
+        time: DateTime
+        numberOfAttending: Int
+        attending: [String]
+        groupId: groupData
+    }
+
+    input coordinatorInput {
+        coordinatorID: ID!
+    }
+
     input groupSchedule {
         appointmentTime: [DateTime]
 
@@ -171,9 +190,9 @@ scalar DateTime
         getAllUsers :[Users]
         getAllGroups :[Group]
         getAdmins : Admin
-        getCoordinatorSchedule: DateTime
         availSchedule: DateTime
         availScheduleByGroup(date:DateTime!): DateTime
+        getCoordinatorSchedule(coordinatorInput:coordinatorInput): [CoordSchedule2]
     }
 
     type Mutation {
@@ -189,7 +208,6 @@ scalar DateTime
         resetPassword(resetPassword: resetPassword):Boolean
         createGroup(groupInfo: groupInfo): Group
         createGroupSchedule(groupSchedule: groupSchedule): Boolean
-
     }
 `
 
