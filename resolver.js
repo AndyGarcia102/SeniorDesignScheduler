@@ -2,6 +2,7 @@ const Users = require('./models/Users.model');
 const Professors = require('./models/Professors.model');
 const Group = require('./models/Group.model');
 const Coordinator = require('./models/Coordinator.model');
+const CoordSchedule = require('./models/CoordSchedule.model');
 const Auth = require('./models/Auth.model');
 const UserInfo = require('./models/UserInfo.model');
 const {ApolloError} = require('apollo-server-errors');
