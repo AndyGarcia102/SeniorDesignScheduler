@@ -74,14 +74,21 @@ const resolvers = {
                 {$sort:{_id:1}}
             ]);
         },
-        getCoordinatorSchedule: async() =>{
-            return await Coordinator.aggregate([
-                    {$group:{_id:"$schedule"}},
-                    {$unwind:"$_id"},
-                    {$group:{_id:"$_id"}},
-                    {$sort:{_id:1}}
+        getCoordinatorSchedule: async(_,{coordinatorInput:{coordinatorID}}) =>{
+            const CID = Mongoose.Types.ObjectId(coordinatorID)
+            return await CoordSchedule.aggregate([
+                {$match:{coordinatorID:CID}},
+                {$lookup:{
+                    from:"groups",
+                    localField:"groupId",
+                    foreignField:"groupNumber",
+                    as:"groupId"
+                }},
+                {$project:{room:1,time:1,attending:1,numberOfAttending:1,"groupId.groupName":1, "groupId.groupNumber":1, "groupId.projectField":1}},
+                {$unwind:"$groupId"},
+                {$sort: {time:1}}
             ])
-        }
+        },
     },
     Mutation:{
         registerCoordinator: async(_,{registerInput: {firstname,lastname, email, password, confirmpassword}}) =>{
