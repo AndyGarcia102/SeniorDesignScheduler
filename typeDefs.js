@@ -1,4 +1,4 @@
-const {gql} = require('apollo-server-express');
+const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
 
@@ -17,7 +17,11 @@ scalar DateTime
         image: String
         role: String
     }
-
+    type Appointment {
+        Time: String
+        Group: ID
+        Attending:[ID]
+    }
     type Coordinator {
         _id:ID!
         firstname: String
@@ -35,17 +39,10 @@ scalar DateTime
 
     type Users {
         _id:ID
-        firstname: String
-        lastname: String
-        email: String
-        password: String
-        confirmpassword: String
-        group: String
-        privilege: Int
-        confirm: Int
+        userFName: String
+        userLName: String
+        groupNumber:Int
         role: String
-        token: String
-        image: String
     }
 
     type UserLogin {
@@ -57,6 +54,10 @@ scalar DateTime
         privilege: String
         confirm: String
         password: String
+    }
+
+    type Auth {
+        token: String
     }
 
     type Professors {
@@ -74,6 +75,7 @@ scalar DateTime
     type Appointments {
         date: DateTime 
         groupID: ID 
+        Attending: [ID]
     }
 
     type Schedule {
@@ -98,11 +100,11 @@ scalar DateTime
         group: String
     }
 
-    input ProfessorRequestInput{
+    input ProfessorRequestInput {
         Request:ID!
     }
 
-    input appointInput{
+    input appointInput {
         firstname: String
         lastname: String
     }
@@ -155,6 +157,22 @@ scalar DateTime
         groupNumber: Int
     }
 
+    input groupSchedule {
+        appointmentTime: [DateTime]
+    }
+
+    type availSchedule {
+        _id: DateTime
+    }
+    type CoordSchedule {
+        _id: ID
+        coordinatorID:ID
+        room:String
+        groupId:ID
+        time:DateTime
+        attending:[ID]
+    }
+
     type groupData {
         groupName: String
         groupNumber: Int
@@ -170,44 +188,65 @@ scalar DateTime
         groupId: groupData
     }
 
+    input coordinatorSInput {
+        CID:ID
+        Room:String
+        Times:[DateTime]
+    }
+
+    input appointmentEdit {
+        GID:ID
+        professorsAttending:[ID]
+        time: DateTime
+        CID:ID
+
+    }
+    input cancelation {
+        CancelerID:ID
+        ApID:ID
+        reason:Boolean
+    }
+
+    type Cookie {
+        getCookie: String
+    }
+
     input coordinatorInput {
         coordinatorID: ID!
-    }
-
-    input groupSchedule {
-        appointmentTime: [DateTime]
-
-    }
-
-    type availSchedule {
-        _id: DateTime
     }
 
     type Query {
         getUser(ID:ID!) : Users
         getProfessor(ID:ID!) : Professors
         getAllProfessors : [Professors]
-        getAllUsers :[Users]
+        getAllUsers(ID:ID!) : [Users]
         getAllGroups :[Group]
         getAdmins : Admin
         availSchedule: DateTime
         availScheduleByGroup(date:DateTime!): DateTime
+        getAllCoordinatorSchedule:[CoordSchedule2]
         getCoordinatorSchedule(coordinatorInput:coordinatorInput): [CoordSchedule2]
+        refreshToken(id : String, privilege:String) : String
     }
 
     type Mutation {
-        createProfessorSchedule(ID:ID!,privilege: String! ,professorScheduleInput:ProfessorScheduleInput):Boolean
+        createProfessorSchedule(ID:ID!,privilege: String! ,professorScheduleInput:ProfessorScheduleInput): Boolean
         deleteUser(ID:ID!):Users
         deleteProfessor(ID:ID!):Professors
         editUser(ID:ID!, userInput:UserInput):Users!
         editProfessor(ID:ID!, professorInput:ProfessorInput):Professors
+        makeAppointment(AppointmentEdit:appointmentEdit):CoordSchedule
+        roomChange(CID:ID!, newRoom:String):[CoordSchedule]
         registerUser(registerInput: RegisterInput) : UserLogin
         registerCoordinator(registerInput: RegisterInput): UserLogin
         loginUser(loginInput: loginInput): UserLogin
         confirmEmail(confirmEmail: confirmEmail):Boolean
         resetPassword(resetPassword: resetPassword):Boolean
-        createGroup(groupInfo: groupInfo): Group
+        createGroup(CID:ID!): Boolean
         createGroupSchedule(groupSchedule: groupSchedule): Boolean
+        createCoordinatorSchedule(coordinatorSInput: coordinatorSInput):CoordSchedule
+        cancelAppointment(cancelation:cancelation):CoordSchedule
+        createStudentAccounts(CID:ID!): Boolean
     }
 `
 
