@@ -179,12 +179,17 @@ scalar DateTime
         projectField: String
     }
 
+    type profData {
+        _id:ID!
+        fullName: String
+    }
     type CoordSchedule2 {
         _id: ID
         room: String
         time: DateTime
         numberOfAttending: Int
         attending: [String]
+        attending2: [profData]
         groupId: groupData
     }
 
@@ -212,7 +217,7 @@ scalar DateTime
     }
 
     input coordinatorInput {
-        coordinatorID: ID!
+        coordinatorID: String!
     }
 
     type Query {
@@ -224,8 +229,9 @@ scalar DateTime
         getAdmins : Admin
         availSchedule: DateTime
         availScheduleByGroup(date:DateTime!): DateTime
+        availScheduleProfessor: DateTime
         getAllCoordinatorSchedule:[CoordSchedule2]
-        getCoordinatorSchedule(coordinatorInput:coordinatorInput): [CoordSchedule2]
+        getCoordinatorSchedule(CID: String): [CoordSchedule2]
         refreshToken(id : String, privilege:String) : String
     }
 
@@ -236,6 +242,8 @@ scalar DateTime
         editUser(ID:ID!, userInput:UserInput):Users!
         editProfessor(ID:ID!, professorInput:ProfessorInput):Professors
         makeAppointment(AppointmentEdit:appointmentEdit):CoordSchedule
+        groupSelectAppointmentTime(CID:ID!, GID:ID!, time: DateTime): Boolean
+        RandomlySelectProfessorsToAGroup(CID:ID!) : Boolean
         roomChange(CID:ID!, newRoom:String):[CoordSchedule]
         registerUser(registerInput: RegisterInput) : UserLogin
         registerCoordinator(registerInput: RegisterInput): UserLogin
