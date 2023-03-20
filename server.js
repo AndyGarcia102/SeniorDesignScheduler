@@ -11,21 +11,21 @@ const resolvers = require("./resolver");
 const path = require("path");
 require('dotenv').config();
 
-async function startServer(){
+async function startServer() {
     const app = express();
-    
+
     const httpServer = http.createServer(app);
 
     const server = new ApolloServer({
         typeDefs,
         resolvers,
-        plugins:[ApolloServerPluginDrainHttpServer({httpServer})]
+        plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
     });
 
     await server.start();
 
     app.set('view engine', 'ejs');
-    
+
     app.use(
         '/graphql',
         cors(),
@@ -41,11 +41,11 @@ async function startServer(){
 
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("Mongoose Connected...");
-    await new Promise((resolve) => httpServer.listen({port:8080}, resolve));
+    await new Promise((resolve) => httpServer.listen({ port: 8080 }, resolve));
 
-    console.log(`🚀 Server ready at`+ 8080);
+    console.log(`🚀 Server ready at` + 8080);
 
- }
+}
 
 startServer();
 
